@@ -18,7 +18,7 @@ class MemberRepositoryTest {
     @Autowired MemberRepository memberRepository;
 
     @Test
-    @Transactional
+    @Transactional  // entityManager 에서 DB 변경이나 저장은 트랜잭션 안에서만 일어난다.
     @Rollback(false)
     public void testMember() throws Exception {
         //given
@@ -32,7 +32,7 @@ class MemberRepositoryTest {
         //then
         Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
         Assertions.assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-        Assertions.assertThat(findMember).isEqualTo(member);
+        Assertions.assertThat(findMember).isEqualTo(member); // 영속성....?
 
     }
 }
