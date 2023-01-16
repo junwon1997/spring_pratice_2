@@ -1,5 +1,6 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,15 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    // 상품 수정(준영속성 엔티티 처리하는 방법 -> 변경 감지(merge 쓰지말자!))
+    @Transactional
+    public void updateItem(Long itemId, int price, String name, int stockQuantity){
+        Item findItem = itemRepository.findOne(itemId);
+        findItem.setPrice(price);
+        findItem.setName(name);
+        findItem.setStockQuantity(stockQuantity);
+    }
+
     // 상품 조회
     public List<Item> findItems(){
         return itemRepository.findAll();
@@ -30,4 +40,6 @@ public class ItemService {
     public Item findOne(Long id){
         return itemRepository.findOne(id);
     }
+
+
 }

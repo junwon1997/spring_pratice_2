@@ -18,7 +18,7 @@ public class ItemRepository {
         if(item.getId() == null){
             em.persist(item);
         } else{
-            em.merge(item);
+            em.merge(item); // 준영속 엔티티(JPA 가 관리하지 않는 엔티티)를 수정하는 방법 중 하나
         }
     }
 
