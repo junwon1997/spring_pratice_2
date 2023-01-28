@@ -3,9 +3,7 @@ package jpabook.jpashop.api;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.service.MemberService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -60,12 +58,15 @@ public class MemberApiController {
     }
 
     @GetMapping("api/v2/members")
-    public Result memberV2(){
+    public MemberAll memberV2(){
         List<Member> findMembers = memberService.findMembers();
         List<MemberDto> collect = findMembers.stream()
                 .map(m -> new MemberDto(m.getName()))
                 .collect(Collectors.toList());
-        return new Result(collect.size(), collect);
+        MemberAll build = MemberAll.builder()
+                .rank(collect)
+                .build();
+        return build;
     }
 
 
@@ -103,5 +104,13 @@ public class MemberApiController {
     @AllArgsConstructor
     static class MemberDto {
         private String name;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    static class MemberAll {
+        private List<MemberDto> rank;
     }
 }
