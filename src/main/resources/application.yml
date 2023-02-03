@@ -12,8 +12,9 @@ spring:
       hibernate:
 #        show_sql: true
         format_sql: true
+        default_batch_fetch_size: 100  # 1 + N 문제 어느정도 해결 -> 1 + 1 로 최적화!
 
 logging:
   level:
     org.hibernate.SQL: debug
-    org.hibernate.type: trace
+#    org.hibernate.type: trace
